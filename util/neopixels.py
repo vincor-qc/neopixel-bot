@@ -26,7 +26,7 @@ async def breathe(color, wait):
         # Decrease Brightness
         for i in range(255, 0, -1):
             fill_pixels(color, i)
-            await asyncio.sleep(wait / 1000)
+            await asyncio.sleep(wait)
     
 
 
@@ -36,7 +36,7 @@ async def rainbow_cycle(wait):
         for i in range(255):
             pixels.fill(wheel(i))
             pixels.show()
-            await asyncio.sleep(wait / 1000)
+            await asyncio.sleep(wait)
 
 
 # Rainbow Wave Mode (All pixels are different colors at any given time)
@@ -47,7 +47,7 @@ async def rainbow_wave(wait):
                 pixel_index = (i * 256 // num_pixels) + j
                 pixels[i] = wheel(pixel_index & 255)
             pixels.show()
-            await asyncio.sleep(wait / 1000)
+            await asyncio.sleep(wait)
 
 # Rainbow Breathing Mode
 async def rainbow_breathing(wait):
@@ -59,12 +59,12 @@ async def rainbow_breathing(wait):
             # Increase Brightness
             for i in range(255):
                 fill_pixels(color, i)
-                await asyncio.sleep(wait / 1000)
+                await asyncio.sleep(wait)
 
             # Decrease Brightness
             for i in range(255, 0, -1):
                 fill_pixels(color, i)
-                await asyncio.sleep(wait / 1000)
+                await asyncio.sleep(wait)
 
 # Sets the entire strip to a random rolor
 def random_color():

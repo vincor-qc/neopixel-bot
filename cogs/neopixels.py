@@ -25,14 +25,6 @@ class Neopixels(commands.Cog):
         neopixels.static([r, g, b])
         await ctx.send("Static color set.")
 
-    # Sets a breathing pattern
-    @commands.command()
-    async def breathe(self, ctx, r = 255, g = 255, b = 255, wait = 100):
-        self.cancel_loop()
-
-        self.loop_task = asyncio.ensure_future(neopixels.breathe([r, g, b], wait))
-        await ctx.send("Breathing color set.")
-
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
     async def wave(self, ctx, wait = 100):
