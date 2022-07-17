@@ -31,7 +31,7 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(wait / 1000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(wait / 100000))
 
         await ctx.send("Rainbow wave set.")
 
@@ -41,17 +41,17 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(wait / 1000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(wait / 100000))
 
         await ctx.send("Rainbow cycle set.")
 
     # Starts a rainbow breathing pattern
     @commands.command()
-    async def rbreathe(self, ctx, wait = 100):
+    async def rbreathe(self, ctx, wait = 10):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(wait / 1000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(wait / 100000))
 
         await ctx.send("Rainbow breathing set.")
 
