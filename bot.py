@@ -17,10 +17,10 @@ async def on_ready():
 
 @bot.event
 async def on_message(msg):
-    if msg.author.id != os.getenv("OWNER_ID"):
-        msg.channel.send("You are not allowed to use this bot.")
+    if msg.author.id is '585653754888716290':
+        await bot.process_commands(msg)
         return
-    await bot.process_commands(msg)
+    await msg.channel.send("You are not allowed to use this bot.")
 
 @bot.event
 async def on_command_error(ctx, error):

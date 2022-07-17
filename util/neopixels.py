@@ -2,6 +2,7 @@ import time
 import random
 import board
 import neopixel
+import asyncio
 
 ORDER = neopixel.GRB
 num_pixels = 144
@@ -32,21 +33,21 @@ def breathe(color, wait):
 
 
 # Rainbow Cycle Mode (All pixels are the same color at any given time)
-def rainbow_cycle(wait):
+async def rainbow_cycle(wait):
     for i in range(255):
         pixels.fill(wheel(i))
         pixels.show()
-        time.sleep(wait / 1000)
+        await asyncio.sleep(wait / 1000)
 
 
 # Rainbow Wave Mode (All pixels are different colors at any given time)
-def rainbow_wave(wait):
+async def rainbow_wave(wait):
     for j in range(255):
         for i in range(num_pixels):
             pixel_index = (i * 256 // num_pixels) + j
             pixels[i] = wheel(pixel_index & 255)
         pixels.show()
-        time.sleep(wait / 1000)
+        await asyncio.sleep(wait / 1000)
 
 
 # Sets the Entire Strip to a Random Color
