@@ -54,18 +54,6 @@ def random_color():
     pixels.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
     pixels.show()
 
-
-# Sets Each Pixel to a Random Color (idk why you would use this option lol)
-def random_pixel_colors():
-    for i in range(num_pixels):
-        pixels[i] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-    pixels.show()
-
-
-# The Forbidden Mode
-# def epilepsy_mode(wait):
-#     print("why")
-
 # Clear Lighting
 def clear():
     pixels.fill((0, 0, 0))
