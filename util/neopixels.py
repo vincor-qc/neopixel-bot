@@ -16,16 +16,17 @@ def static(color):
 
 
 # Breathing Lighting Mode
-def breathe(color, wait):
+async def breathe(color, wait):
     # Increase Brightness
     for i in range(255):
         fill_pixels(color, i)
+        await asyncio.sleep(wait / 1000)
 
     # Decrease Brightness
     for i in range(255, 0, -1):
         fill_pixels(color, i)
+        await asyncio.sleep(wait / 1000)
     
-    time.sleep(wait / 1000)
 
 
 # Rainbow Cycle Mode (All pixels are the same color at any given time)
@@ -54,12 +55,12 @@ async def rainbow_breathing(wait):
         # Increase Brightness
         for i in range(255):
             fill_pixels(color, i)
+            await asyncio.sleep(wait / 1000)
 
         # Decrease Brightness
         for i in range(255, 0, -1):
             fill_pixels(color, i)
-    
-    time.sleep(wait / 1000)
+            await asyncio.sleep(wait / 1000)
 
 # Sets the entire strip to a random rolor
 def random_color():

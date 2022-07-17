@@ -30,7 +30,7 @@ class Neopixels(commands.Cog):
     async def breathe(self, ctx, r = 255, g = 255, b = 255, wait = 100):
         self.cancel_loop()
 
-        neopixels.breathe([r, g, b], wait)
+        self.loop_task = asyncio.ensure_future(neopixels.breathe([r, g, b], wait))
         await ctx.send("Breathing color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
@@ -75,6 +75,7 @@ class Neopixels(commands.Cog):
         if self.is_looping:
             self.loop_task.cancel()
             self.is_looping = False
+        
 
     
 
