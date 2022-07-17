@@ -17,19 +17,15 @@ def static(color):
 
 # Breathing Lighting Mode
 def breathe(color, wait):
-    # Function to fill pixels for breathing lighting
-    def fill_pixels():
-        pixels.fill((round(color[0] * i / 255), round(color[1] * i / 255), round(color[2] * i / 255)))
-        pixels.show()
-        time.sleep(wait / 1000)
-
     # Increase Brightness
     for i in range(255):
-        fill_pixels()
+        fill_pixels(color, i)
 
     # Decrease Brightness
     for i in range(255, 0, -1):
-        fill_pixels()
+        fill_pixels(color, i)
+    
+    time.sleep(wait / 1000)
 
 
 # Rainbow Cycle Mode (All pixels are the same color at any given time)
@@ -49,10 +45,31 @@ async def rainbow_wave(wait):
         pixels.show()
         await asyncio.sleep(wait / 1000)
 
+# Rainbow Breathing Mode
+async def rainbow_breathing(wait):
+    # A matrix of colors in the rainbow
+    colors = [[255, 0, 0], [255, 100, 0], [255, 255, 0], [100, 250, 0], [0, 255, 0], [0, 255, 100], [0, 255, 255], [0, 100, 255], [0, 0, 255], [100, 0, 255], [255, 0, 255], [255, 0, 100]]
 
-# Sets the Entire Strip to a Random Color
+    for color in colors:
+        # Increase Brightness
+        for i in range(255):
+            fill_pixels(color, i)
+
+        # Decrease Brightness
+        for i in range(255, 0, -1):
+            fill_pixels(color, i)
+    
+    time.sleep(wait / 1000)
+
+# Sets the entire strip to a random rolor
 def random_color():
     pixels.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+    pixels.show()
+
+# Sets each pixel to a random color
+def random_pixels():
+    for i in range(num_pixels):
+        pixels[i] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     pixels.show()
 
 # Clear Lighting
@@ -81,3 +98,9 @@ def wheel(pos):
         b = int(255 - pos * 3)
 
     return (r, g, b) if ORDER in (neopixel.RGB, neopixel.GRB) else (r, g, b, 0)
+
+# Fill the strip with a color
+# i = intensity
+def fill_pixels(color, i):
+    pixels.fill((round(color[0] * i / 255), round(color[1] * i / 255), round(color[2] * i / 255)))
+    pixels.show()

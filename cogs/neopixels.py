@@ -12,11 +12,12 @@ class Neopixels(commands.Cog):
         self.loop_task = None
 
 
+    # Pong!
     @commands.command()
     async def ping(self, ctx):
-        """Pong!"""
         await ctx.send("Pong!")
 
+    # Sets a static color
     @commands.command()
     async def static(self, ctx, r = 255, g = 255, b = 255):
         self.cancel_loop()
@@ -24,12 +25,51 @@ class Neopixels(commands.Cog):
         neopixels.static([r, g, b])
         await ctx.send("Static color set.")
 
+    # Sets a breathing pattern
+    @commands.command()
+    async def breathe(self, ctx, r = 255, g = 255, b = 255, wait = 100):
+        self.cancel_loop()
+
+        neopixels.breathe([r, g, b], wait)
+        await ctx.send("Breathing color set.")
+
+    # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
     async def wave(self, ctx, wait = 100):
+        self.cancel_loop()
+
         self.is_looping = True
         self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(wait / 1000))
 
         await ctx.send("Rainbow wave set.")
+
+    # Starts a rainbow cycle (all pixels the same color)
+    @commands.command()
+    async def cycle(self, ctx, wait = 100):
+        self.cancel_loop()
+
+        self.is_looping = True
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(wait / 1000))
+
+        await ctx.send("Rainbow cycle set.")
+
+    # Starts a rainbow breathing pattern
+    @commands.command()
+    async def rbreathe(self, ctx, wait = 100):
+        self.cancel_loop()
+
+        self.is_looping = True
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(wait / 1000))
+
+        await ctx.send("Rainbow breathing set.")
+
+    # Clears the pixels
+    @commands.command()
+    async def clear(self, ctx):
+        self.cancel_loop()
+
+        neopixels.clear()
+        await ctx.send("Lighting cleared.")
 
     def cancel_loop(self):
         if self.is_looping:

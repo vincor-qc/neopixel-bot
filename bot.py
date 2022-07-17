@@ -8,6 +8,9 @@ from discord.ext import commands
 # Load variables from the .env file.
 dotenv.load_dotenv()
 
+# Allowed servers
+allowed_servers = [645753006352236544]
+
 # Create a new bot instance with the prefix "!"
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
@@ -17,10 +20,12 @@ async def on_ready():
 
 @bot.event
 async def on_message(msg):
-    if msg.author.id is '585653754888716290':
+
+    # If the message is from a server that we want to allow, then process it.
+    if msg.guild.id in allowed_servers:
         await bot.process_commands(msg)
-        return
-    await msg.channel.send("You are not allowed to use this bot.")
+    else:
+        await msg.channel.send("This bot is not allowed to run in this server.")
 
 @bot.event
 async def on_command_error(ctx, error):
