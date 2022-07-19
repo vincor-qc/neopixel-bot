@@ -52,7 +52,7 @@ async def rainbow_wave(wait):
 # Rainbow Breathing Mode
 async def rainbow_breathing(wait):
     # A matrix of colors in the rainbow
-    colors = [[255, 0, 0], [255, 100, 0], [255, 255, 0], [100, 250, 0], [0, 255, 0], [0, 255, 100], [0, 255, 255], [0, 100, 255], [0, 0, 255], [100, 0, 255], [255, 0, 255], [255, 0, 100]]
+    colors = [[255, 0, 0], [255, 100, 0], [255, 255, 0], [0, 255, 0], [0, 255, 100], [0, 0, 255], [255, 0, 255], [255, 0, 100]]
 
     while True:
         for color in colors:
