@@ -82,15 +82,16 @@ async def starry_night(color, wait):
 
 # Lights up from one side to the other periodically
 async def periodic(color, wait):
-    for i in range(0, num_pixels):
-        pixels[i] = color
-        pixels.show()
-        await asyncio.sleep(wait)
+    while True:
+        for i in range(0, num_pixels):
+            pixels[i] = color
+            pixels.show()
+            await asyncio.sleep(wait)
 
-    for i in range(0, num_pixels):
-        pixels[i] = [0, 0, 0]   
-        pixels.show()
-        await asyncio.sleep(wait)
+        for i in range(0, num_pixels):
+            pixels[i] = [0, 0, 0]   
+            pixels.show()
+            await asyncio.sleep(wait)
 
 # Sets the entire strip to a random rolor
 def random_color():

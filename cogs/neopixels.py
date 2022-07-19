@@ -78,7 +78,7 @@ class Neopixels(commands.Cog):
     async def random(self, ctx):
         self.cancel_loop()
 
-        neopixels.random()
+        neopixels.random_color()
         await ctx.send("Random color set.")
 
     # Clears the pixels
