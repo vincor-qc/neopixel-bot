@@ -17,19 +17,6 @@ class Neopixels(commands.Cog):
     async def ping(self, ctx):
         await ctx.send("Pong!")
 
-    # Help
-    @commands.command()
-    async def help(self, ctx):
-        await ctx.send("""
-        **Lighting Commands**
-        `!ping - Pong.
-        `!static <RED> <GREEN> <BLUE>` - Sets a static color with the specified RBG values.
-        `!wave <SPEED>` - Rainbow Wave.
-        `!cycle <SPEED>` - Rainbow Cycle.
-        `!rbreathe <SPEED>` - Rainbow Breathing.
-        `!clear` - Clears the lighting.
-        """)
-
     # Sets a static color
     @commands.command()
     async def static(self, ctx, r = 255, g = 255, b = 255):
