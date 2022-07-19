@@ -70,13 +70,15 @@ async def rainbow_breathing(wait):
 async def starry_night(color, wait):
     cur = 150
     while True:
-            for i in range(0, random.randint(1, 10)):
-                cur += i
+            for i in range(0, random.randint(1, 100)):
+
+                if cur < 255:
+                    cur += 1
                 fill_pixels(color, cur)
                 await asyncio.sleep(wait)
 
-            for i in range(0, random.randint(1, 10), -1):
-                cur += i
+            for i in range(0, random.randint(1, 100), -1):
+                if cur > 0: cur -= 1
                 fill_pixels(color, cur)
                 await asyncio.sleep(wait)
 
