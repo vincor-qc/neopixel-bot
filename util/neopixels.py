@@ -82,6 +82,9 @@ async def starry_night(color, wait):
 
 # Lights up from one side to the other periodically
 async def periodic(color, wait):
+    pixels.fill([0, 0, 0])
+    pixels.show()
+
     while True:
         for i in range(0, num_pixels):
             pixels[i] = color
@@ -95,7 +98,7 @@ async def periodic(color, wait):
 
 # Sets the entire strip to a random rolor
 def random_color():
-    pixels.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+    pixels.fill(wheel(random.randint(0, 255)))
     pixels.show()
 
 # Sets each pixel to a random color
