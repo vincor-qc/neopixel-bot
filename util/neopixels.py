@@ -71,7 +71,6 @@ async def starry_night(color, wait):
     cur = 150
     while True:
             for i in range(0, random.randint(1, 100)):
-
                 if cur < 255:
                     cur += 1
                 fill_pixels(color, cur)
@@ -88,13 +87,23 @@ async def periodic(color, wait):
     pixels.show()
 
     while True:
-        for i in range(0, num_pixels):
-            pixels[i] = color
+        for i in range(num_pixels):
+            for j in range(0, i):
+                pixels[j] = color
+
+            for j in range(i, num_pixels):
+                pixels[j] = (0, 0, 0)
+
             pixels.show()
             await asyncio.sleep(wait)
 
-        for i in range(0, num_pixels):
-            pixels[i] = [0, 0, 0]   
+        for i in range(num_pixels):
+            for j in range(0, i):
+                pixels[j`] = (0, 0, 0)
+
+            for j in range(i, num_pixels):
+                pixels[j] = color
+                
             pixels.show()
             await asyncio.sleep(wait)
 
