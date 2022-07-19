@@ -17,6 +17,19 @@ class Neopixels(commands.Cog):
     async def ping(self, ctx):
         await ctx.send("Pong!")
 
+    # Help
+    @commands.command()
+    async def help(self, ctx):
+        await ctx.send("""
+        **Lighting Commands**
+        `!ping - Pong.
+        `!static <RED> <GREEN> <BLUE>` - Sets a static color with the specified RBG values.
+        `!wave <SPEED>` - Rainbow Wave.
+        `!cycle <SPEED>` - Rainbow Cycle.
+        `!rbreathe <SPEED>` - Rainbow Breathing.
+        `!clear` - Clears the lighting.
+        """)
+
     # Sets a static color
     @commands.command()
     async def static(self, ctx, r = 255, g = 255, b = 255):
@@ -24,6 +37,24 @@ class Neopixels(commands.Cog):
 
         neopixels.static([r, g, b])
         await ctx.send("Static color set.")
+    
+    # Sets starry night mode
+    @commands.command()
+    async def starry_night(self, ctx, r, g, b, wait = 100):
+        self.cancel_loop()
+
+        self.loop_task = asyncio.ensure_future(neopixels.starry_night([r, g, b], wait))
+        self.is_looping = True
+        await ctx.send("Starry Night mode set.")
+
+    # Sets the periodic mode
+    @commands.command()
+    async def periodic(self, ctx, r, g, b, wait = 100):
+        self.cancel_loop()
+
+        self.loop_task = asyncio.ensure_future(neopixels.periodic([r, g, b], wait))
+        self.is_looping = True
+        await ctx.send("Periodic mode set.")
 
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
@@ -54,6 +85,14 @@ class Neopixels(commands.Cog):
         self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(wait / 100000))
 
         await ctx.send("Rainbow breathing set.")
+
+    # Sets a random color
+    @commands.command()
+    async def random(self, ctx):
+        self.cancel_loop()
+
+        neopixels.random()
+        await ctx.send("Random color set.")
 
     # Clears the pixels
     @commands.command()

@@ -66,6 +66,32 @@ async def rainbow_breathing(wait):
                 fill_pixels(color, i)
                 await asyncio.sleep(wait)
 
+# Starry Night Mode
+async def starry_night(color, wait):
+    cur = 150
+    while True:
+            for i in range(0, random.randint(1, 10)):
+                cur += i
+                fill_pixels(color, cur)
+                await asyncio.sleep(wait)
+
+            for i in range(0, random.randint(1, 10), -1):
+                cur += i
+                fill_pixels(color, cur)
+                await asyncio.sleep(wait)
+
+# Lights up from one side to the other periodically
+async def periodic(color, wait):
+    for i in range(0, num_pixels):
+        pixels[i] = color
+        pixels.show()
+        await asyncio.sleep(wait)
+
+    for i in range(0, num_pixels):
+        pixels[i] = [0, 0, 0]   
+        pixels.show()
+        await asyncio.sleep(wait)
+
 # Sets the entire strip to a random rolor
 def random_color():
     pixels.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
