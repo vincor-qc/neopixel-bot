@@ -29,16 +29,15 @@ async def breathe(color, wait):
             await asyncio.sleep(wait)
 
 # Gradient Color Mode
-async def gradient(color1, color2, wait):
+async def gradient(colors, wait):
     while True:
-        for i in range(num_pixels):
-            pixels[i] = (round(color1[0] * i / 255), round(color1[1] * i / 255), round(color1[2] * i / 255))
-            pixels.show()
-            await asyncio.sleep(wait)
-        for i in range(num_pixels):
-            pixels[i] = (round(color2[0] * i / 255), round(color2[1] * i / 255), round(color2[2] * i / 255))
-            pixels.show()
-            await asyncio.sleep(wait)
+        for color in colors:
+            for i in range(num_pixels):
+                pixels[i] = (round(color[0] * i / 255), round(color[1] * i / 255), round(color[2] * i / 255))
+                pixels.show()
+                await asyncio.sleep(wait)
+
+
     
 # Rainbow Cycle Mode (All pixels are the same color at any given time)
 async def rainbow_cycle(wait):

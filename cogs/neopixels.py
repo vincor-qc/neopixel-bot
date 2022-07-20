@@ -1,3 +1,4 @@
+from curses.ascii import isdigit
 from discord.ext import commands
 from util import neopixels
 import asyncio
@@ -44,21 +45,21 @@ class Neopixels(commands.Cog):
 
     # Sets a gradient color
     @commands.command()
-    async def gradient(self, ctx, color1, color2, speed = 1):
+    async def gradient(self, ctx, *args):
         self.cancel_loop()
 
-        if color1 in colors:
-            color1 = colors[color1]
-        else:
-            color1 = self.hex_to_rgb(color1)
+        if not isdigit(args[-1]):
+            args[-1] = 10
 
-        if color2 in colors:
-            color2 = colors[color2]
-        else:
-            color2 = self.hex_to_rgb(color2)
+        colors = []
+        for arg in args[:-1]:
+            if arg in colors:
+                colors.append(colors[arg])
+            else:
+                colors.append(self.hex_to_rgb(arg))
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.gradient(color1, color2, 0.1 / speed))
+        self.loop_task = asyncio.ensure_future(neopixels.gradient(colors, 0.1 / args[-1]))
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
