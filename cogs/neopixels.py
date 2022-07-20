@@ -57,7 +57,8 @@ class Neopixels(commands.Cog):
         else:
             color2 = self.hex_to_rgb(color2)
 
-        neopixels.gradient(color1, color2, 0.1 / speed)
+        self.is_looping = True
+        self.loop_task = asyncio.ensure_future(neopixels.gradient(color1, color2, 0.1 / speed))
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
