@@ -48,18 +48,15 @@ class Neopixels(commands.Cog):
     async def gradient(self, ctx, *args):
         self.cancel_loop()
 
-        if not isdigit(args[-1]):
-            args[-1] = 10
-
-        colors = []
-        for arg in args[:-1]:
+        cargs = []
+        for arg in args:
             if arg in colors:
-                colors.append(colors[arg])
+                cargs.append(colors[arg])
             else:
-                colors.append(self.hex_to_rgb(arg))
+                cargs.append(self.hex_to_rgb(arg))
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.gradient(colors, 0.1 / args[-1]))
+        self.loop_task = asyncio.ensure_future(neopixels.gradient(cargs, 0.01))
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
@@ -113,13 +110,12 @@ class Neopixels(commands.Cog):
             self.loop_task.cancel()
             self.is_looping = False
 
-        
+
     # String to RGB color converter
     def hex_to_rgb(self, hex):
         hex = hex.lstrip('#')
         return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
-        
-    
+
 
 def setup(bot):
     bot.add_cog(Neopixels(bot))
