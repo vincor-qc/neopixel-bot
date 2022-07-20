@@ -34,7 +34,7 @@ class Neopixels(commands.Cog):
     # Sets a speed
     @commands.command()
     async def speed(self, ctx, speed):
-        if isdigit(speed):
+        if speed.isnumeric():
             self.speed = int(speed)
             await ctx.send("Speed set to {}x".format(speed))
         else:
