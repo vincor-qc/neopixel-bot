@@ -9,6 +9,11 @@ num_pixels = 144
 pixels = neopixel.NeoPixel(board.D18, num_pixels, auto_write=False, pixel_order=ORDER, brightness=0.5)
 
 
+# Set the brightness of the strip
+def set_brightness(brightness):
+    pixels.brightness = brightness
+    pixels.show()
+
 # Static Color Mode
 def static(color):
     pixels.fill(color)

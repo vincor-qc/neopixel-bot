@@ -23,12 +23,36 @@ class Neopixels(commands.Cog):
         self.bot = bot
         self.is_looping = False
         self.loop_task = None
+        self.speed = 1
 
 
     # Pong!
     @commands.command()
     async def ping(self, ctx):
         await ctx.send("Pong!")
+
+    # Sets a speed
+    @commands.command()
+    async def speed(self, ctx, speed):
+        if isdigit(speed):
+            self.speed = int(speed)
+            await ctx.send("Speed set to {}x".format(speed))
+        else:
+            await ctx.send("Invalid speed")
+
+    # Sets a brightness between 0 and 1
+    @commands.command()
+    async def brightness(self, ctx, brightness):
+        try:
+            brightness = float(brightness)
+            if brightness < 0 or brightness > 1:
+                await ctx.send("Invalid brightness")
+            else:
+                neopixels.set_brightness(brightness)
+                await ctx.send("Brightness set to {}".format(brightness))
+        except ValueError:
+            await ctx.send("Invalid brightness")
+       
 
     # Sets a static color
     @commands.command()
@@ -56,35 +80,35 @@ class Neopixels(commands.Cog):
                 cargs.append(self.hex_to_rgb(arg))
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.gradient(cargs, 0.01))
+        self.loop_task = asyncio.ensure_future(neopixels.gradient(cargs, 0.01 / self.speed))
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
-    async def wave(self, ctx, speed = 1):
+    async def wave(self, ctx):
         self.cancel_loop()
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.1 / speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.1 / self.speed))
 
         await ctx.send("Rainbow wave set.")
 
     # Starts a rainbow cycle (all pixels the same color)
     @commands.command()
-    async def cycle(self, ctx, speed = 1):
+    async def cycle(self, ctx):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.1 / speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.1 / self.speed))
 
         await ctx.send("Rainbow cycle set.")
 
     # Starts a rainbow breathing pattern
     @commands.command()
-    async def rbreathe(self, ctx, speed = 1):
+    async def rbreathe(self, ctx):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.1 / speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.1 / self.speed))
 
         await ctx.send("Rainbow breathing set.")
 
