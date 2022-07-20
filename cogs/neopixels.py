@@ -35,7 +35,7 @@ class Neopixels(commands.Cog):
     @commands.command()
     async def speed(self, ctx, speed):
         if isdigit(speed):
-            self.speed = int(speed)
+            neopixels.set_wait(0.01 / int(speed))
             await ctx.send("Speed set to {}x".format(speed))
         else:
             await ctx.send("Invalid speed")
@@ -80,7 +80,7 @@ class Neopixels(commands.Cog):
                 cargs.append(self.hex_to_rgb(arg))
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.gradient(cargs, 0.01 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.gradient(cargs))
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
@@ -88,7 +88,7 @@ class Neopixels(commands.Cog):
     async def wave(self, ctx):
         self.cancel_loop()
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave())
 
         await ctx.send("Rainbow wave set.")
 
@@ -98,7 +98,7 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle())
 
         await ctx.send("Rainbow cycle set.")
 
@@ -108,7 +108,7 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing())
 
         await ctx.send("Rainbow breathing set.")
 
