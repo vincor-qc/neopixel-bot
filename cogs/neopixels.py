@@ -72,6 +72,10 @@ class Neopixels(commands.Cog):
     async def gradient(self, ctx, *args):
         self.cancel_loop()
 
+        if len(args) < 2:
+            await ctx.send("You must provide more than 1 color!")
+            return
+
         cargs = []
         for arg in args:
             if arg in colors:
