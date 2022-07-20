@@ -42,6 +42,24 @@ class Neopixels(commands.Cog):
         neopixels.static(color)
         await ctx.send("Static color set.")
 
+    # Sets a gradient color
+    @commands.command()
+    async def gradient(self, ctx, color1, color2):
+        self.cancel_loop()
+
+        if color1 in colors:
+            color1 = colors[color1]
+        else:
+            color1 = self.hex_to_rgb(color1)
+
+        if color2 in colors:
+            color2 = colors[color2]
+        else:
+            color2 = self.hex_to_rgb(color2)
+
+        neopixels.gradient(color1, color2, 0.1)
+        await ctx.send("Gradient color set.")
+
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
     async def wave(self, ctx, wait = 100):
