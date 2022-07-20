@@ -7,16 +7,12 @@ import asyncio
 ORDER = neopixel.GRB
 num_pixels = 144
 pixels = neopixel.NeoPixel(board.D18, num_pixels, auto_write=False, pixel_order=ORDER, brightness=0.5)
-wait = 0.01
+
 
 # Set the brightness of the strip
 def set_brightness(brightness):
     pixels.brightness = brightness
     pixels.show()
-
-def set_wait(w):
-    global wait
-    wait = w
 
 # Static Color Mode
 def static(color):
@@ -25,7 +21,7 @@ def static(color):
 
 
 # Breathing Lighting Mode
-async def breathe(color):
+async def breathe(color, wait):
     while True:
         # Increase Brightness
         for i in range(255):
@@ -38,7 +34,7 @@ async def breathe(color):
             await asyncio.sleep(wait)
 
 # Gradient Color Mode
-async def gradient(colors):
+async def gradient(colors, wait):
     while True:
         for color in colors:
             for i in range(num_pixels):
@@ -49,7 +45,7 @@ async def gradient(colors):
 
     
 # Rainbow Cycle Mode (All pixels are the same color at any given time)
-async def rainbow_cycle():
+async def rainbow_cycle(wait):
     while True:
         for i in range(255):
             pixels.fill(wheel(i))
@@ -58,7 +54,7 @@ async def rainbow_cycle():
 
 
 # Rainbow Wave Mode (All pixels are different colors at any given time)
-async def rainbow_wave():
+async def rainbow_wave(wait):
     while True:
         for j in range(255):
             for i in range(num_pixels):
@@ -68,7 +64,7 @@ async def rainbow_wave():
             await asyncio.sleep(wait)
 
 # Rainbow Breathing Mode
-async def rainbow_breathing():
+async def rainbow_breathing(wait):
     # A matrix of colors in the rainbow
     colors = [[255, 0, 0], [255, 100, 0], [255, 255, 0], [0, 255, 0], [0, 255, 100], [0, 0, 255], [255, 0, 255], [255, 0, 100]]
 
