@@ -44,7 +44,7 @@ class Neopixels(commands.Cog):
 
     # Sets a gradient color
     @commands.command()
-    async def gradient(self, ctx, color1, color2):
+    async def gradient(self, ctx, color1, color2, speed = 1):
         self.cancel_loop()
 
         if color1 in colors:
@@ -57,35 +57,35 @@ class Neopixels(commands.Cog):
         else:
             color2 = self.hex_to_rgb(color2)
 
-        neopixels.gradient(color1, color2, 0.1)
+        neopixels.gradient(color1, color2, 0.1 / speed)
         await ctx.send("Gradient color set.")
 
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
-    async def wave(self, ctx, wait = 100):
+    async def wave(self, ctx, speed = 1):
         self.cancel_loop()
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(wait / 100000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.1 / speed))
 
         await ctx.send("Rainbow wave set.")
 
     # Starts a rainbow cycle (all pixels the same color)
     @commands.command()
-    async def cycle(self, ctx, wait = 100):
+    async def cycle(self, ctx, speed = 1):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(wait / 100000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.1 / speed))
 
         await ctx.send("Rainbow cycle set.")
 
     # Starts a rainbow breathing pattern
     @commands.command()
-    async def rbreathe(self, ctx, wait = 10):
+    async def rbreathe(self, ctx, speed = 1):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(wait / 100000))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.1 / speed))
 
         await ctx.send("Rainbow breathing set.")
 
@@ -105,6 +105,7 @@ class Neopixels(commands.Cog):
         neopixels.clear()
         await ctx.send("Lighting cleared.")
 
+    # Cancel Looping Tasks
     def cancel_loop(self):
         if self.is_looping:
             self.loop_task.cancel()
@@ -116,7 +117,6 @@ class Neopixels(commands.Cog):
         hex = hex.lstrip('#')
         return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
         
-
     
 
 def setup(bot):

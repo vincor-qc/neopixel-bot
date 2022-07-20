@@ -21,7 +21,7 @@ async def breathe(color, wait):
         # Increase Brightness
         for i in range(255):
             fill_pixels(color, i)
-            await asyncio.sleep(wait / 1000)
+            await asyncio.sleep(wait)
 
         # Decrease Brightness
         for i in range(255, 0, -1):
