@@ -21,11 +21,12 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
 
-    # If the message is from a server that we want to allow, then process it.
-    if msg.guild.id in allowed_servers:
-        await bot.process_commands(msg)
-    else:
-        await msg.channel.send("This bot is not allowed to run in this server.")
+	# If the message is from a server that we want to allow, then process it.
+	if msg.guild.id in allowed_servers:
+		msg.content = msg.content.lower()
+		await bot.process_commands(msg)
+	else:	
+		await msg.channel.send("This bot is not allowed to run in this server.")
 
 @bot.event
 async def on_command_error(ctx, error):

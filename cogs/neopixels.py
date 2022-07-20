@@ -2,6 +2,18 @@ from discord.ext import commands
 from util import neopixels
 import asyncio
 
+# Dict of colors and their rgb values
+colors = {
+    'red': (255, 0, 0),
+    'green': (0, 255, 0),
+    'blue': (0, 0, 255),
+    'yellow': (255, 255, 0),
+    'orange': (255, 100, 0),
+    'purple': (255, 0, 255),
+    'cyan': (0, 255, 255),
+    'white': (255, 255, 255),
+}
+
 class Neopixels(commands.Cog):
 
 
@@ -19,35 +31,21 @@ class Neopixels(commands.Cog):
 
     # Sets a static color
     @commands.command()
-    async def static(self, ctx, r = 255, g = 255, b = 255):
+    async def static(self, ctx, color):
         self.cancel_loop()
 
-        neopixels.static([r, g, b])
+        if color in colors:
+            color = colors[color]
+        else:
+            color = self.hex_to_rgb(color)
+
+        neopixels.static(color)
         await ctx.send("Static color set.")
-    
-    # Sets starry night mode
-    @commands.command()
-    async def starry_night(self, ctx, r, g, b, wait = 100):
-        self.cancel_loop()
-
-        self.loop_task = asyncio.ensure_future(neopixels.starry_night([r, g, b], wait))
-        self.is_looping = True
-        await ctx.send("Starry Night mode set.")
-
-    # Sets the periodic mode
-    @commands.command()
-    async def periodic(self, ctx, r, g, b, wait = 100):
-        self.cancel_loop()
-
-        self.loop_task = asyncio.ensure_future(neopixels.periodic([r, g, b], wait))
-        self.is_looping = True
-        await ctx.send("Periodic mode set.")
 
     # Starts a rainbow wave (all pixels are different colors)
     @commands.command()
     async def wave(self, ctx, wait = 100):
         self.cancel_loop()
-
         self.is_looping = True
         self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(wait / 100000))
 
@@ -93,6 +91,12 @@ class Neopixels(commands.Cog):
         if self.is_looping:
             self.loop_task.cancel()
             self.is_looping = False
+
+        
+    # String to RGB color converter
+    def hex_to_rgb(self, hex):
+        hex = hex.lstrip('#')
+        return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
         
 
     
