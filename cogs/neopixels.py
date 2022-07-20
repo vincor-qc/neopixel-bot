@@ -92,7 +92,7 @@ class Neopixels(commands.Cog):
     async def wave(self, ctx):
         self.cancel_loop()
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_wave(0.01 / self.speed))
 
         await ctx.send("Rainbow wave set.")
 
@@ -102,7 +102,7 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_cycle(0.01 / self.speed))
 
         await ctx.send("Rainbow cycle set.")
 
@@ -112,7 +112,7 @@ class Neopixels(commands.Cog):
         self.cancel_loop()
 
         self.is_looping = True
-        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.1 / self.speed))
+        self.loop_task = asyncio.ensure_future(neopixels.rainbow_breathing(0.01 / self.speed))
 
         await ctx.send("Rainbow breathing set.")
 
